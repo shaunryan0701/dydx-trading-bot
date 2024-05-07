@@ -1,4 +1,5 @@
 from func_private import place_market_order, check_order_status
+from func_messaging import send_message
 from datetime import datetime, timedelta
 import time
 
@@ -165,7 +166,7 @@ class BotAgent:
         # Ensure order is live before processing
         order_status_m2 = self.check_order_status_by_id(self.order_dict["order_id_m2"])
 
-         # Guard: Aborder if order failed
+         # Guard: Abort if order failed
         if order_status_m2 != "live":
             self.order_dict["pair_status"] = "ERROR"
             self.order_dict["comments"] = f"{self.market_1} failed to fill"
@@ -190,7 +191,7 @@ class BotAgent:
                     print(order_status_close_order)
 
                     # Send Message
-                    # send_message("Failed to execute. Code red. Error code: 100")
+                    send_message("Failed to execute. Code red. Error code: 100")
 
                     # ABORT
                     exit(1)
@@ -202,7 +203,7 @@ class BotAgent:
                 print(order_status_close_order)
 
                 # Send Message
-                # send_message("Failed to execute. Code red. Error code: 101")
+                send_message("Failed to execute. Code red. Error code: 101")
 
                 # ABORT
                 exit(1)

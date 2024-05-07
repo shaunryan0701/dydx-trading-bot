@@ -4,10 +4,15 @@ from func_public import construct_market_prices
 from func_cointegration import store_cointegration_results
 from func_entry_pairs import open_positions
 from func_exit_pairs import manage_trade_exits
+from func_messaging import send_message
 from constants import ABORT_ALL_POSITIONS, FIND_COINTEGRATED, PLACE_TRADES, MANAGE_EXITS
 
 
 if __name__ == "__main__":
+
+    # Message on start
+    send_message("Bot launch successful")
+
     # Connect to client
     try:
         print("Connecting to client")
@@ -15,6 +20,7 @@ if __name__ == "__main__":
     except Exception as e:
         print(e)
         print("Error connecting to client", e)
+        send_message(f"Failed to connect to client {e}")
         exit(1)
 
     # Abort all open positions
@@ -25,6 +31,7 @@ if __name__ == "__main__":
         except Exception as e:
             print(e)
             print("Error connecting to client", e)
+            send_message(f"Error closing all positions {e}")
             exit(1)
 
     # find cointegrated pairs
@@ -36,6 +43,7 @@ if __name__ == "__main__":
         except Exception as e:
             print(e)
             print("Error constructing market prices", e)
+            send_message(f"Error constructing market prices {e}")
             exit(1)        
 
         # store cointegrated pairs
@@ -47,7 +55,8 @@ if __name__ == "__main__":
                 exit(1)
         except Exception as e:
             print(e)
-            print("Error savig cointgrated pairs: ", e)
+            print("Error saving cointgrated pairs: ", e)
+            send_message(f"Error saving cointegrated pairs {e}")
             exit(1) 
 
     while True:
@@ -59,6 +68,7 @@ if __name__ == "__main__":
             except Exception as e:
                 print(e)
                 print("Error managing exiting positions : ", e)
+                send_message(f"Error managing exiting positions {e}")
                 exit(1) 
 
         # place trades for opening position
@@ -68,4 +78,5 @@ if __name__ == "__main__":
             except Exception as e:
                 print(e)
                 print("Error trading pairs: ", e)
+                send_message(f"Error opening trades {e}")
                 exit(1) 
