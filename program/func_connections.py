@@ -34,6 +34,6 @@ def connect_to_dydx() -> Client:
     print("Connection succesful")
     print("Account Id:" , account_id)
     print("Quote Balance:" , quote_balance)
-    print(account.data)
+    # print(account.data)
 
     return client
